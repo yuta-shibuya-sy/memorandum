@@ -13,9 +13,10 @@ import Layout from "../layouts/Layout.astro";
           placeholder="課題を入力"
           autocomplete="off"
           class="todo"
+          value=""
         />
         <div class="flex">
-          <input type="date" id="add_date" class="date" />
+          <input type="date" id="add_date" class="date" value="" />
           <input type="button" id="add_button" value="追加" class="add" />
         </div>
       </div>
@@ -245,8 +246,19 @@ import Layout from "../layouts/Layout.astro";
     const add_date = document.getElementById("add_date");
     const todo_ul = document.querySelector("ul");
 
-    let todo_text = add_todo.value;
-    let date_text = add_date.value;
+    let todo_text = "";
+    let date_text = "";
+
+    if (add_todo instanceof HTMLInputElement && add_todo !== null) {
+      let todo_text = add_todo.value;
+    }
+
+    if (add_date instanceof HTMLInputElement && add_date !== null) {
+      let todo_text = add_date.value;
+    }
+
+    // let todo_text = add_todo.value;
+    // let date_text = add_date.value;
 
     if (todos_list) {
       todo_text = todos_list.todo_save;
@@ -280,7 +292,7 @@ import Layout from "../layouts/Layout.astro";
 
         //   期限の色設定
         let today = new Date();
-        let term = (date_date - today) / 86400000;
+        let term = (Number(date_date) - Number(today)) / 86400000;
         if (term < 0) {
           todo_li.classList.add("out");
         } else if (term < 1) {
@@ -309,8 +321,16 @@ import Layout from "../layouts/Layout.astro";
       save_date();
 
       // todo&dateのリセット
-      add_todo.value = "";
-      add_date.value = "";
+      // add_todo.value = "";
+      // add_date.value = "";
+
+      if (add_todo instanceof HTMLInputElement && add_todo !== null) {
+        add_todo.value = "";
+      }
+
+      if (add_date instanceof HTMLInputElement && add_date !== null) {
+        add_date.value = "";
+      }
     }
   }
 
